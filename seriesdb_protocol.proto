@@ -1,0 +1,350 @@
+syntax = "proto3";
+
+package seriesdb.protocol;
+
+/* msg type enum */
+
+enum MsgType {
+  /* unused, placeholder for gpb: 0 */
+  UNKNOWN = 0;
+
+  PING_REQ = 1;
+  PING_REP = 2;
+
+  SET_ROWS_REQ = 3;
+  SET_ROWS_REP = 4;
+
+  // DELETE_ROW_REQ : 5;
+  // DELETE_ROW_REP : 6;
+  // DELETE_FIRST_ROW_REQ : 7;
+  // DELETE_FIRST_ROW_REP : 8;
+  // DELETE_LAST_ROW_REQ : 9;
+  // DELETE_LAST_ROW_REP : 10;
+  // DELETE_NTH_ROW_REQ : 11;
+  // DELETE_NTH_ROW_REP : 12;
+  // DELETE_NTH_LAST_ROW_REQ : 13;
+  // DELETE_NTH_LAST_ROW_REP : 14;
+  DELETE_ROWS_SINCE_REQ = 15;
+  DELETE_ROWS_SINCE_REP = 16;
+  // DELETE_ROWS_UNTIL_REQ : 17;
+  // DELETE_ROWS_UNTIL_REP : 18;
+  // DELETE_ROWS_SINCE_FIRST_REQ : 19;
+  // DELETE_ROWS_SINCE_FIRST_REP : 20;
+  // DELETE_ROWS_UNTIL_LAST_REQ : 21;
+  // DELETE_ROWS_UNTIL_LAST_REP : 22;
+  // DELETE_ROWS_BETWEEN_REQ : 23;
+  // DELETE_ROWS_BETWEEN_REP : 24;
+
+  // GET_ROW_REQ : 25;
+  // GET_ROW_REP : 26;
+  GET_FIRST_ROW_REQ = 27;
+  GET_FIRST_ROW_REP = 28;
+  GET_LAST_ROW_REQ = 29;
+  GET_LAST_ROW_REP = 30;
+  // GET_NTH_ROW_REQ : 31;
+  // GET_NTH_ROW_REP : 32;
+  // GET_NTH_LAST_ROW_REQ : 33;
+  // GET_NTH_LAST_ROW_REP : 34;
+  GET_BOUNDARY_ROWS_REQ = 35;
+  GET_BOUNDARY_ROWS_REP = 36;
+  GET_ROWS_SINCE_REQ = 37;
+  GET_ROWS_SINCE_REP = 38;
+  GET_ROWS_UNTIL_REQ = 39;
+  GET_ROWS_UNTIL_REP = 40;
+  // GET_ROWS_SINCE_FIRST_REQ : 41;
+  // GET_ROWS_SINCE_FIRST_REP : 42;
+  GET_ROWS_UNTIL_LAST_REQ = 43;
+  GET_ROWS_UNTIL_LAST_REP = 44;
+  GET_ROWS_BETWEEN_REQ = 45;
+  GET_ROWS_BETWEEN_REP = 46;
+
+  GET_FIRST_KEY_REQ = 47;
+  GET_FIRST_KEY_REP = 48;
+  GET_LAST_KEY_REQ = 49;
+  GET_LAST_KEY_REP = 50;
+  // GET_NTH_KEY_REQ : 51;
+  // GET_NTH_KEY_REP : 52;
+  // GET_NTH_LAST_KEY_REQ : 53;
+  // GET_NTH_LAST_KEY_REP : 54;
+  GET_BOUNDARY_KEYS_REQ = 55;
+  GET_BOUNDARY_KEYS_REP = 56;
+
+  GET_VALUE_REQ = 57;
+  GET_VALUE_REP = 58;
+  // GET_FIRST_VALUE_REQ : 59;
+  // GET_FIRST_VALUE_REP : 60;
+  // GET_LAST_VALUE_REQ : 61;
+  // GET_LAST_VALUE_REP : 62;
+  // GET_NTH_VALUE_REQ : 63;
+  // GET_NTH_VALUE_REP : 64;
+  GET_NTH_LAST_VALUE_REQ = 65;
+  GET_NTH_LAST_VALUE_REP = 66;
+  GET_VALUES_SINCE_REQ = 67;
+  GET_VALUES_SINCE_REP = 68;
+  GET_VALUES_UNTIL_REQ = 69;
+  GET_VALUES_UNTIL_REP = 70;
+  // GET_VALUES_SINCE_FIRST_REQ : 71;
+  // GET_VALUES_SINCE_FIRST_REP : 72;
+  GET_VALUES_UNTIL_LAST_REQ = 73;
+  GET_VALUES_UNTIL_LAST_REP = 74;
+  GET_VALUES_BETWEEN_REQ = 75;
+  GET_VALUES_BETWEEN_REP = 76;
+
+  // EXIST_REQ : 77;
+  // EXIST_REP : 78;
+
+  DESTROY_TABLE_REQ = 79;
+  DESTROY_TABLE_REP = 80;
+
+  RENAME_TABLE_REQ = 81;
+  RENAME_TABLE_REP = 82;
+
+  GET_TABLES_REQ = 83;
+  GET_TABLES_REP = 84;
+
+  OK_REP = 99;
+  ERROR_REP = 100;
+}
+
+/* msg type defs */
+
+message PingReq { uint32 round_ref = 15; }
+
+message PingRep { uint32 round_ref = 15; }
+
+message SetRowsReq {
+  string table = 1;
+  repeated bytes keys = 2;
+  repeated bytes values = 3;
+  uint32 round_ref = 15;
+}
+
+message SetRowsRep { uint32 round_ref = 15; }
+
+message DeleteRowsSinceReq {
+  string table = 1;
+  bytes key = 2;
+  uint32 limit = 3;
+  uint32 round_ref = 15;
+}
+
+message DeleteRowsSinceRep { uint32 round_ref = 15; }
+
+message GetFirstRowReq {
+  string table = 1;
+  uint32 round_ref = 15;
+}
+
+message GetFirstRowRep {
+  bytes key = 1;
+  bytes value = 2;
+  uint32 round_ref = 15;
+}
+
+message GetLastRowReq {
+  string table = 1;
+  uint32 round_ref = 15;
+}
+
+message GetLastRowRep {
+  bytes key = 1;
+  bytes value = 2;
+  uint32 round_ref = 15;
+}
+
+message GetBoundaryRowsReq {
+  string table = 1;
+  uint32 round_ref = 15;
+}
+
+message GetBoundaryRowsRep {
+  bytes first_key = 1;
+  bytes first_value = 2;
+  bytes last_key = 3;
+  bytes last_value = 4;
+  uint32 round_ref = 15;
+}
+
+message GetRowsSinceReq {
+  string table = 1;
+  bytes key = 2;
+  uint32 limit = 3;
+  uint32 round_ref = 15;
+}
+
+message GetRowsSinceRep {
+  repeated bytes keys = 1;
+  repeated bytes values = 2;
+  uint32 round_ref = 15;
+}
+
+message GetRowsUntilLastReq {
+  string table = 1;
+  uint32 limit = 2;
+  uint32 round_ref = 15;
+}
+
+message GetRowsUntilLastRep {
+  repeated bytes keys = 1;
+  repeated bytes values = 2;
+  uint32 round_ref = 15;
+}
+
+message GetRowsUntilReq {
+  string table = 1;
+  bytes key = 2;
+  uint32 limit = 3;
+  uint32 round_ref = 15;
+}
+
+message GetRowsUntilRep {
+  repeated bytes keys = 1;
+  repeated bytes values = 2;
+  uint32 round_ref = 15;
+}
+
+message GetRowsBetweenReq {
+  string table = 1;
+  bytes begin_key = 2;
+  bytes end_key = 3;
+  uint32 limit = 4;
+  uint32 round_ref = 15;
+}
+
+message GetRowsBetweenRep {
+  repeated bytes keys = 1;
+  repeated bytes values = 2;
+  uint32 round_ref = 15;
+}
+
+message GetFirstKeyReq {
+  string table = 1;
+  uint32 round_ref = 15;
+}
+
+message GetFirstKeyRep {
+  bytes key = 1;
+  uint32 round_ref = 15;
+}
+
+message GetLastKeyReq {
+  string table = 1;
+  uint32 round_ref = 15;
+}
+
+message GetLastKeyRep {
+  bytes key = 1;
+  uint32 round_ref = 15;
+}
+
+message GetBoundaryKeysReq {
+  string table = 1;
+  uint32 round_ref = 15;
+}
+
+message GetBoundaryKeysRep {
+  bytes first_key = 1;
+  bytes last_key = 2;
+  uint32 round_ref = 15;
+}
+
+message GetValueReq {
+  string table = 1;
+  bytes key = 2;
+  uint32 round_ref = 15;
+}
+
+message GetValueRep {
+  bytes value = 1;
+  uint32 round_ref = 15;
+}
+
+message GetNthLastValueReq {
+  string table = 1;
+  uint32 n = 2;
+  uint32 round_ref = 15;
+}
+
+message GetNthLastValueRep {
+  bytes value = 1;
+  uint32 round_ref = 15;
+}
+
+message GetValuesSinceReq {
+  string table = 1;
+  bytes key = 2;
+  uint32 limit = 3;
+  uint32 round_ref = 15;
+}
+
+message GetValuesSinceRep {
+  repeated bytes values = 1;
+  uint32 round_ref = 15;
+}
+
+message GetValuesUntilLastReq {
+  string table = 1;
+  uint32 limit = 2;
+  uint32 round_ref = 15;
+}
+
+message GetValuesUntilLastRep {
+  repeated bytes values = 1;
+  uint32 round_ref = 15;
+}
+
+message GetValuesUntilReq {
+  string table = 1;
+  bytes key = 2;
+  uint32 limit = 3;
+  uint32 round_ref = 15;
+}
+
+message GetValuesUntilRep {
+  repeated bytes values = 1;
+  uint32 round_ref = 15;
+}
+
+message GetValuesBetweenReq {
+  string table = 1;
+  bytes begin_key = 2;
+  bytes end_key = 3;
+  uint32 limit = 4;
+  uint32 round_ref = 15;
+}
+
+message GetValuesBetweenRep {
+  repeated bytes values = 1;
+  uint32 round_ref = 15;
+}
+
+message DestroyTableReq {
+  string table = 1;
+  uint32 round_ref = 15;
+}
+
+message DestroyTableRep { uint32 round_ref = 15; }
+
+message RenameTableReq {
+  string old_table = 1;
+  string new_table = 2;
+  uint32 round_ref = 15;
+}
+
+message RenameTableRep { uint32 round_ref = 15; }
+
+message GetTablesReq { uint32 round_ref = 15; }
+
+message GetTablesRep {
+  repeated string names = 1;
+  repeated uint32 ids = 2;
+  uint32 round_ref = 15;
+}
+
+message OkRep { uint32 round_ref = 15; }
+
+message ErrorRep {
+  int32 code = 1;
+  string desc = 2;
+  uint32 round_ref = 15;
+}
