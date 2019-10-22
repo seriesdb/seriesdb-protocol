@@ -371,23 +371,23 @@ message UpdateBatch {
 }
 
 message UpdateWrapper {
-  message PutUpdate {
+  message Put {
     bytes key = 1;
     bytes value = 2;
   }
 
-  message DeleteUpdate {
+  message Delete {
     bytes key = 1;
   }
 
-  message DeleteRangeUpdate {
+  message DeleteRange {
     bytes from_key = 1;
     bytes to_key = 2;
   }
 
   oneof update {
-    PutUpdate put_update = 1;
-    DeleteUpdate delete_update = 2;
-    DeleteRangeUpdate delete_range_update = 3;
+    Put put = 1;
+    Delete delete = 2;
+    DeleteRange delete_range = 3;
   }
 }
