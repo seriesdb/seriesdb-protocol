@@ -346,6 +346,7 @@ message GetTablesRep {
 
 message GetUpdatesSinceReq {
   uint64 sn = 1;
+  uint32 limit = 2;
   uint32 round_ref = 15;
 }
 
