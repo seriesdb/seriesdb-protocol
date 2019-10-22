@@ -365,12 +365,12 @@ message ErrorRep {
 /* data type defs */
 
 message UpdateBatch {
-  repeated Update updates = 1;
   oneof Update {
     PutUpdate put = 1;
     DeleteUpdate delete = 2;
     DeleteRangeUpdate delete_range = 3;
   }
+  repeated Update updates = 1;
 }
 
 message PutUpdate {
