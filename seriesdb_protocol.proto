@@ -102,6 +102,9 @@ enum MsgType {
   GET_TABLES_REQ = 83;
   GET_TABLES_REP = 84;
 
+  GET_UPDATES_SINCE_REQ = 90;
+  GET_UPDATES_SINCE_REP = 91;
+
   OK_REP = 99;
   ERROR_REP = 100;
 }
@@ -341,10 +344,45 @@ message GetTablesRep {
   uint32 round_ref = 15;
 }
 
+message GetUpdatesSinceReq {
+  uint64 sn = 1;
+  uint32 round_ref = 15;
+}
+
+message GetUpdatesSinceRep {
+  repeated string names = 1;
+  uint32 round_ref = 15;
+}
+
 message OkRep { uint32 round_ref = 15; }
 
 message ErrorRep {
   int32 code = 1;
   string desc = 2;
   uint32 round_ref = 15;
+}
+
+/* data type defs */
+
+message UpdateBatch {
+  repeated Update updates = 1;
+  oneof Update {
+    PutUpdate put = 1;
+    DeleteUpdate delete = 2;
+    DeleteRangeUpdate delete_range = 3;
+  }
+}
+
+message PutUpdate {
+  bytes key = 1;
+  bytes value = 2;
+}
+
+message DeleteUpdate {
+  bytes key = 1;
+}
+
+message DeleteRangeUpdate {
+  bytes from_key = 1;
+  bytes to_key = 2;
 }
