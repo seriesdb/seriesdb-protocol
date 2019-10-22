@@ -386,8 +386,8 @@ message UpdateWrapper {
   }
 
   oneof update {
-    PutUpdate put = 1;
-    DeleteUpdate delete = 2;
-    DeleteRangeUpdate delete_range = 3;
+    PutUpdate put_update = 1;
+    DeleteUpdate delete_update = 2;
+    DeleteRangeUpdate delete_range_update = 3;
   }
 }
