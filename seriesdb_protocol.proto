@@ -350,7 +350,7 @@ message GetUpdatesSinceReq {
 }
 
 message GetUpdatesSinceRep {
-  repeated string names = 1;
+  repeated UpdateBatch update_batches = 1;
   uint32 round_ref = 15;
 }
 
