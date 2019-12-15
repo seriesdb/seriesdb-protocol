@@ -328,6 +328,13 @@ message DestroyTableReq {
 
 message DestroyTableRep { uint32 round_ref = 15; }
 
+message TruncateTableReq {
+  string table = 1;
+  uint32 round_ref = 15;
+}
+
+message TruncateTableRep { uint32 round_ref = 15; }
+
 message RenameTableReq {
   string old_table = 1;
   string new_table = 2;
